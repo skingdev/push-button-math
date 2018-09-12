@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Push Button Math</title>
+  <style>
+    .selected-math { color: blue; }
+    .flex-container {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-flow: row;
+      line-height:30px;
+      max-width: 80%;
+    }
+    .flex-item-number {
+      background: burlywood;
+      margin: 3px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.5em;
+      min-width: 6%;
+      max-width: 6%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      min-height: 80px;
+      user-select: none;
+    }
+    .flex-item {
+      background: burlywood;
+      margin: 3px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.5em;
+      min-width: 6%;
+      max-width: 6%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      min-height: 80px;
+      user-select: none;
+    }
+    .flex-item-blowout {
+      transform: scale(1.5);
+      background-color: coral;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body></body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    setupAddition();
+  });
+
+  function setupAddition() {
+    $('.container').remove();
+    $('body').prepend('<div class="container"></div>');
+    $('.container').prepend('<div class="flex-container"></div>');
+    $('<div class="flex-item-number math-selector"><div><span class="selected-math">+</span> <span>-</span> <span>x</span></div></div>').appendTo('.container .flex-container');
+    for (var i = 1; i <= 9; i++) {
+      $('<div class="flex-item-number"><span>'+ i +'</span></div>').appendTo('.container .flex-container');
+    }
+    var total = 0;
+
+    for (var j = 1; j <= 9; j++) {
+      $('.container').append('<div class="flex-container"></div>');
+      $('<div class="flex-item-number"><span>' + j + '</span></div>').appendTo('.flex-container:last-child');
+      for (var i = 1; i <= 9; i++) {
+        total = j + i;
+        $('<div class="flex-item" data-action="clickable"><span class="hidden">' + total +'</span><span>' + j + ' + ' + i + '</span></div>').appendTo('.flex-container:last-child');
+      }
+    }
+    bindClicks();
+    bindMathSelector();
+  }
+
+  function setupSubtraction() {
+    $('.container').remove();
+    $('body').prepend('<div class="container"></div>');
+    $('.container').prepend('<div class="flex-container"></div>');
+    $('<div class="flex-item-number math-selector"><div><span>+</span> <span class="selected-math">-</span> <span>x</span></div></div>').appendTo('.container .flex-container');
+    for (var i = 9; i >= 1; i--) {
+      $('<div class="flex-item-number"><span>'+ i +'</span></div>').appendTo('.container .flex-container');
+    }
+    var total = 0;
+
+    for (var j = 9; j >= 1; j--) {
+      $('.container').append('<div class="flex-container"></div>');
+      $('<div class="flex-item-number"><span>' + j + '</span></div>').appendTo('.flex-container:last-child');
+      for (var i = 9; i >= 1; i--) {
+        total = j - i;
+        if (total < 0) {
+          $('<div class="flex-item"></div>').appendTo('.flex-container:last-child');
+        } else {
+          $('<div class="flex-item" data-action="clickable"><span class="hidden">' + total +'</span><span>' + j + ' - ' + i + '</span></div>').appendTo('.flex-container:last-child');
+        }
+      }
+    }
+    bindClicks();
+    bindMathSelector();
+  }
+
+  function setupMultiplication() {
+    $('.container').remove();
+    $('body').prepend('<div class="container"></div>');
+    $('.container').prepend('<div class="flex-container"></div>');
+    $('<div class="flex-item-number math-selector"><div><span>+</span> <span>-</span> <span class="selected-math">x</span></div></div>').appendTo('.container .flex-container');
+    for (var i = 1; i <= 9; i++) {
+      $('<div class="flex-item-number"><span>'+ i +'</span></div>').appendTo('.container .flex-container');
+    }
+    var total = 0;
+
+    for (var j = 1; j <= 9; j++) {
+      $('.container').append('<div class="flex-container"></div>');
+      $('<div class="flex-item-number"><span>' + j + '</span></div>').appendTo('.flex-container:last-child');
+      for (var i = 1; i <= 9; i++) {
+        total = j * i;
+        $('<div class="flex-item" data-action="clickable"><span class="hidden">' + total +'</span><span>' + j + ' x ' + i + '</span></div>').appendTo('.flex-container:last-child');
+      }
+    }
+    bindClicks();
+    bindMathSelector();
+  }
+
+  function bindMathSelector() {
+    $('.math-selector').click(function(item) {
+      var currentlySelectedMath = $(item.currentTarget).find('.selected-math');
+      if (currentlySelectedMath.text() === '+') {
+        setupSubtraction();
+      }
+      if (currentlySelectedMath.text() === '-') {
+        setupMultiplication();
+      }
+      if (currentlySelectedMath.text() === 'x') {
+        setupAddition();
+      }
+    });
+  }
+
+  function bindClicks() {
+    $('[data-action="clickable"]').mousedown(function(item) {
+      $(item.currentTarget).addClass('flex-item-blowout');
+      $(item.currentTarget).find('.hidden').addClass('displayed');
+      $(item.currentTarget).find('.hidden').removeClass('hidden');
+    });
+    $('[data-action="clickable"]').mouseup(function(item) {
+      $(item.currentTarget).removeClass('flex-item-blowout');
+      $(item.currentTarget).find('.displayed').addClass('hidden');
+      $(item.currentTarget).find('.displayed').removeClass('displayed');
+    });
+    $('[data-action="clickable"]').mouseleave(function(item) {
+      $(item.currentTarget).removeClass('flex-item-blowout');
+      $(item.currentTarget).find('.displayed').addClass('hidden');
+      $(item.currentTarget).find('.displayed').removeClass('displayed');
+    });
+  }
+</script>
+</html>
