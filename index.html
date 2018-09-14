@@ -16,7 +16,6 @@
       display: flex;
       -webkit-flex-flow: row;
       line-height:30px;
-      max-width: 80%;
     }
     .flex-item-number {
       background: burlywood;
@@ -30,8 +29,10 @@
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      min-height: 80px;
+      min-height: 50px;
       user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
     }
     .flex-item {
       background: burlywood;
@@ -45,8 +46,10 @@
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      min-height: 80px;
+      min-height: 50px;
       user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
     }
     .flex-item-blowout {
       transform: scale(1.5);
@@ -81,7 +84,7 @@
       for (var i = 1; i <= 9; i++) {
         total = j + i;
         $('<div class="flex-item" data-action="clickable"><span class="hidden">' + total +'</span><span>' + j + ' + ' + i + '</span></div>').appendTo('.flex-container:last-child');
-      }
+      }      
     }
     bindClicks();
     bindMathSelector();
@@ -107,7 +110,7 @@
         } else {
           $('<div class="flex-item" data-action="clickable"><span class="hidden">' + total +'</span><span>' + j + ' - ' + i + '</span></div>').appendTo('.flex-container:last-child');
         }
-      }
+      }      
     }
     bindClicks();
     bindMathSelector();
@@ -129,7 +132,7 @@
       for (var i = 1; i <= 9; i++) {
         total = j * i;
         $('<div class="flex-item" data-action="clickable"><span class="hidden">' + total +'</span><span>' + j + ' x ' + i + '</span></div>').appendTo('.flex-container:last-child');
-      }
+      }      
     }
     bindClicks();
     bindMathSelector();
