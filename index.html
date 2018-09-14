@@ -16,6 +16,7 @@
       display: flex;
       -webkit-flex-flow: row;
       line-height:30px;
+      height: 56px;
     }
     .flex-item-number {
       background: burlywood;
@@ -23,8 +24,8 @@
       color: white;
       font-weight: bold;
       font-size: 1.5em;
-      min-width: 6%;
-      max-width: 6%;
+      min-width: 9%;
+      max-width: 9%;
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -40,8 +41,8 @@
       color: white;
       font-weight: bold;
       font-size: 1.5em;
-      min-width: 6%;
-      max-width: 6%;
+      min-width: 9%;
+      max-width: 9%;
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -52,8 +53,10 @@
       -webkit-touch-callout: none;
     }
     .flex-item-blowout {
-      transform: scale(1.5);
+      transform: scale(2);
       background-color: coral;
+      padding-top: 3px;
+      padding-bottom: 3px;
     }
     .hidden {
       display: none;
@@ -63,6 +66,7 @@
 
 <body></body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script type="text/javascript">
   $(document).ready(function() {
     setupAddition();
@@ -155,16 +159,19 @@
 
   function bindClicks() {
     $('[data-action="clickable"]').mousedown(function(item) {
+      item.preventDefault();
       $(item.currentTarget).addClass('flex-item-blowout');
       $(item.currentTarget).find('.hidden').addClass('displayed');
       $(item.currentTarget).find('.hidden').removeClass('hidden');
     });
     $('[data-action="clickable"]').mouseup(function(item) {
+      item.preventDefault();
       $(item.currentTarget).removeClass('flex-item-blowout');
       $(item.currentTarget).find('.displayed').addClass('hidden');
       $(item.currentTarget).find('.displayed').removeClass('displayed');
     });
     $('[data-action="clickable"]').mouseleave(function(item) {
+      item.preventDefault();
       $(item.currentTarget).removeClass('flex-item-blowout');
       $(item.currentTarget).find('.displayed').addClass('hidden');
       $(item.currentTarget).find('.displayed').removeClass('displayed');
